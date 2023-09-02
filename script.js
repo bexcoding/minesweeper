@@ -1,7 +1,7 @@
 /*
 Title: Minesweeper
 Description: Classic game of minesweeper for browser
-Last Updated: Aug 31, 2023
+Last Updated: Sep 1, 2023
 Developer: Alexander Beck
 Email: beckhv2@gmail.com
 Github: https://github.com/bexcoding
@@ -20,12 +20,16 @@ let bombLocations = [];
 window.addEventListener('load', () => {
     //create tiles
     createGameTiles();
+    //decide which tiles have bombs
     assignLocations(numOfTiles, numOfBombs);
+    //testing without skulls and crossbones
+    //place skull and crossbones where bombs are
+    /*
     for (i in bombLocations) {
         let tempId = bombLocations[i];
-        console.log(tempId)
         document.getElementById(tempId).innerHTML = '&#9760';
-    }
+    };
+    */
 });
 
 
@@ -41,14 +45,23 @@ function shuffleArray(list) {
 // creates the tiles on the screen
 function createGameTiles(){
     for(i = 0; i < numOfTiles; i++) {
+        // trying to use button instead of div for tiles
+        /*
         let square = document.createElement('div');
         square.setAttribute('class', 'game-tile');
         square.setAttribute('id', i);
         grid.appendChild(square);
+        */
+        let square = document.createElement('button');
+        square.setAttribute('class', 'game-tile');
+        square.setAttribute('id', i);
+        square.setAttribute('type', 'button');
+        square.setAttribute('onclick', 'clickTile(id)');
+        grid.appendChild(square);
     };
 }
 
-
+// decides which tiles are safe and which are bombs
 function assignLocations(tileTotal, bombTotal) {
     let safe = [];
     //start with all locations as safe
@@ -64,4 +77,17 @@ function assignLocations(tileTotal, bombTotal) {
     };
     // set safe locations as all remaining locations that are not bombs 
     safeLocations = safe;
+    console.log(bombLocations);
+}
+
+
+function clickTile(id) {
+    let tile = document.getElementById(id);
+    let tileNum = Number(id);
+    // sets tile to be disabled
+    tile.setAttribute('disabled', 'true');
+    // check if square is bomb and display explosion
+    if(bombLocations.includes(tileNum)) {
+        tile.innerHTML = '&#128165';
+    }
 }
