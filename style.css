@@ -22,16 +22,32 @@ header {
 }
 
 main {
+    display: grid;
+    grid-template-columns: repeat(4, 300px);
+    grid-auto-rows: 1fr;
+    background-color: var(--color-3);
+}
+
+#display-area {
+    width: 360px;
+    height: 600px;
     padding: 60px 0 0 0;
+    background-color: red;
+    grid-column: 1;
+    grid-row: 1;
+    border-right: solid black 3px;
 }
 
 #game-grid {
     background-color: var(--color-3);
     height: 600px;
     width: 600px;
-    margin: 0 auto;
+    margin: 0 auto 0 180px;
+    padding: 60px 0 0 0;
     display: flex;
     flex-wrap: wrap;
+    grid-column: 2 / 4;
+    grid-row: 1;
 }
 
 .game-tile {
@@ -41,4 +57,8 @@ main {
     justify-content: center;
     align-items: center;
     text-align: center;
+}
+
+.game-tile:hover {
+    background-color: #CDB3FF;
 }

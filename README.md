@@ -14,6 +14,12 @@ Game in the style of classic minesweeper.
 - removed skulls and turned divs into buttons
 - disables button on click
 - shows explosion if it is a bomb
+- if bomb occurs, show all squares with bombs and disable all buttons
+- changed min width
+- added color to tile hover
+- change main layout to grid
+- created display area
+
 
 # Obstacles
 
