@@ -1,13 +1,12 @@
 /*
 Title: Minesweeper
 Description: Classic game of minesweeper for browser
-Last Updated: Sep 1, 2023
+Last Updated: Sep 5, 2023
 Developer: Alexander Beck
 Email: beckhv2@gmail.com
 Github: https://github.com/bexcoding
 */
 
-// bombs will be signified by skull '&#9760'
 
 const grid = document.getElementById('game-grid');
 const gridSize = 10;
@@ -22,14 +21,6 @@ window.addEventListener('load', () => {
     createGameTiles();
     //decide which tiles have bombs
     assignLocations(numOfTiles, numOfBombs);
-    //testing without skulls and crossbones
-    //place skull and crossbones where bombs are
-    /*
-    for (i in bombLocations) {
-        let tempId = bombLocations[i];
-        document.getElementById(tempId).innerHTML = '&#9760';
-    };
-    */
 });
 
 
@@ -81,6 +72,7 @@ function assignLocations(tileTotal, bombTotal) {
 }
 
 
+// what to do when a tile is clicked
 function clickTile(id) {
     let tile = document.getElementById(id);
     let tileNum = Number(id);
@@ -89,5 +81,21 @@ function clickTile(id) {
     // check if square is bomb and display explosion
     if(bombLocations.includes(tileNum)) {
         tile.innerHTML = '&#128165';
+        endGame();
     }
+}
+
+
+// sequence for game end
+function endGame() {
+    // send message to console
+    console.log('Game Over');
+    // go through each tile and disable tile
+    for(i = 0; i < numOfTiles; i++){
+        // show all bomb locations
+        if(bombLocations.includes(i)) {
+            document.getElementById(i).innerHTML = '&#128165';
+        };
+        document.getElementById(i).setAttribute('disabled', 'true');
+    };
 }
