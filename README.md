@@ -19,6 +19,7 @@ Game in the style of classic minesweeper.
 - added color to tile hover
 - change main layout to grid
 - created display area
+- finish grid layout
 
 
 # Obstacles
