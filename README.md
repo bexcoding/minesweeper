@@ -21,6 +21,8 @@ Game in the style of classic minesweeper.
 - created display area
 - finish grid layout
 - added basic timer
+- fixed leading zero for timer
+- fixed error for timer double counting. forgot to set timerstarted to true
 
 
 # Obstacles
@@ -28,3 +30,4 @@ Game in the style of classic minesweeper.
 - how to get content to act like button but show info when clicked
 - how to get button to pass id when clicked so it can be disabled
 - how to get timer to space correctly and stop when wanted. also timer runs multiple times
+- couldnt get timer to stop. needed setinterval. also needed to get the return value by assigning the interval start to a variable

@@ -16,6 +16,8 @@ let timerStarted = false;
 let remainingTime = 6;
 let safeLocations = [];
 let bombLocations = [];
+let timerId;
+
 
 //sets up new tiles and game on reload
 window.addEventListener('load', () => {
@@ -79,6 +81,7 @@ function clickTile(id) {
     let tile = document.getElementById(id);
     let tileNum = Number(id);
     if(timerStarted === false) {
+        timerStarted = true;
         startTimer();
     };
     // sets tile to be disabled
@@ -95,7 +98,8 @@ function clickTile(id) {
 function startTimer() {
     let timer = document.getElementById('timer');
     // calls anonymous function every 1 sec
-    setInterval(() => {
+    // timerid variable carries return value for interval so that program knows how to stop interval
+    timerId = setInterval(() => {
         // decrement time and change to min and sec
         remainingTime -= 1;
         let min = Math.floor(remainingTime / 60);
@@ -107,8 +111,9 @@ function startTimer() {
         // formats time and adds leading zero for minutes
         if(remainingTime >= 0) {
             timer.innerHTML = `0${min}:${sec}`;
-        };
-        console.log('interval working')
+        } else {
+            clearInterval(timerId);
+        }
     }, 1000);
 }
 
