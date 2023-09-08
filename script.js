@@ -94,12 +94,19 @@ function clickTile(id) {
 // timer function
 function startTimer() {
     let timer = document.getElementById('timer');
+    // calls anonymous function every 1 sec
     setInterval(() => {
-        if(remainingTime > 0) {
-            remainingTime -= 1;
-            let min = Math.floor(remainingTime / 60);
-            let sec = remainingTime % 60;
-            timer.innerHTML = `${min}:${sec}`;
+        // decrement time and change to min and sec
+        remainingTime -= 1;
+        let min = Math.floor(remainingTime / 60);
+        let sec = remainingTime % 60;
+        // create leading zero for seconds
+        if(sec < 10) {
+            sec = `0${sec}`;
+        };
+        // formats time and adds leading zero for minutes
+        if(remainingTime >= 0) {
+            timer.innerHTML = `0${min}:${sec}`;
         };
         console.log('interval working')
     }, 1000);
