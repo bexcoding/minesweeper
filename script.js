@@ -12,14 +12,17 @@ const grid = document.getElementById('game-grid');
 const gridSize = 10;
 const numOfTiles = gridSize * gridSize;
 const numOfBombs = 10;
+// remainingtiles will be used to decrement and count for odds
+let remainingTiles = numOfTiles;
 let timerStarted = false;
-let remainingTime = 6;
+let remainingTime = 600;
 let safeLocations = [];
 let bombLocations = [];
 // initialize timerid here so that it can be accessed globally. it is changed within a local setting
 let timerId;
 let score = 0;
 let highScore = 0;
+let odds = numOfBombs / numOfTiles;
 
 
 //sets up new tiles and game on reload
@@ -101,6 +104,7 @@ function clickTile(id) {
         endGame();
     } else {
         updateScore();
+        updateOdds();
     };
 }
 
@@ -116,7 +120,7 @@ function startTimer() {
         let min = Math.floor(remainingTime / 60);
         let sec = remainingTime % 60;
         // changes time to red in last minute
-        if(sec < 60) {
+        if(remainingTime < 60) {
             timer.style.color = 'var(--color-1)';
         };
         // create leading zero for seconds
@@ -133,16 +137,27 @@ function startTimer() {
     }, 1000);
 }
 
-
+// updates scoreboard
 function updateScore() {
     let current = document.getElementById('score');
     let high = document.getElementById('hi-score');
-    score += 10;
+    // adds 10 points per tile times the odds multiplier
+    score += (10 + (Math.floor(10 * odds)));
     current.innerHTML = score;
     if(score > highScore) {
         highScore = score;
         high.innerHTML = highScore;
     };
+}
+
+
+// update the odds
+function updateOdds() {
+    remainingTiles -= 1;
+    odds = numOfBombs / remainingTiles;
+    // convert odds to percentage form and display
+    const percentage = Math.floor(odds * 100);
+    document.getElementById('odds').innerHTML = `${percentage}%`;
 }
 
 

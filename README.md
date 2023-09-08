@@ -26,6 +26,7 @@ Game in the style of classic minesweeper.
 - time running out ends game and throws message
 - stylized timer and made larger
 - styled scoreboard and add logic to track score and high score
+- added odds multiplier
 
 
 # Obstacles

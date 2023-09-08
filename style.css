@@ -31,7 +31,7 @@ main {
 #display-area {
     width: 320px;
     height: 740px;
-    background-color: var(--color-3);
+    background-color: white;
     grid-column: 1 / 2;
     grid-row: 1 / 5;
     border-right: 5px solid var(--color-2);
@@ -42,15 +42,10 @@ main {
     text-align: center;
     font-size: 2em;
     color: var(--color-2);
-    background-color: white;
     border-bottom: 5px solid var(--color-2);
 }
 
-#scoreboard {
-    margin-left: 40px;
-}
-
-#score, #hi-score {
+#scoreboard, #score, #hi-score, #odds{
     margin-left: 40px;
 }
 
