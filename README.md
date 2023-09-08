@@ -23,6 +23,8 @@ Game in the style of classic minesweeper.
 - added basic timer
 - fixed leading zero for timer
 - fixed error for timer double counting. forgot to set timerstarted to true
+- time running out ends game and throws message
+- stylized timer and made larger
 
 
 # Obstacles

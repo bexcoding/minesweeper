@@ -89,6 +89,8 @@ function clickTile(id) {
     // check if square is bomb and display explosion
     if(bombLocations.includes(tileNum)) {
         tile.innerHTML = '&#128165';
+        // clear interval here stops time if bomb explodes
+        clearInterval(timerId);
         endGame();
     }
 }
@@ -113,6 +115,7 @@ function startTimer() {
             timer.innerHTML = `0${min}:${sec}`;
         } else {
             clearInterval(timerId);
+            endGame();
         }
     }, 1000);
 }
@@ -130,4 +133,9 @@ function endGame() {
         };
         document.getElementById(i).setAttribute('disabled', 'true');
     };
+    // show message that says that the game is over
+    // timeout so that alert doesnt show up before board is disabled
+    setTimeout(() => {
+        window.alert('Game Over');
+    }, 1000);
 }
