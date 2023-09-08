@@ -41,8 +41,17 @@ main {
 #timer {
     text-align: center;
     font-size: 2em;
+    color: var(--color-2);
     background-color: white;
     border-bottom: 5px solid var(--color-2);
+}
+
+#scoreboard {
+    margin-left: 40px;
+}
+
+#score, #hi-score {
+    margin-left: 40px;
 }
 
 #game-grid {

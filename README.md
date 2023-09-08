@@ -25,6 +25,7 @@ Game in the style of classic minesweeper.
 - fixed error for timer double counting. forgot to set timerstarted to true
 - time running out ends game and throws message
 - stylized timer and made larger
+- styled scoreboard and add logic to track score and high score
 
 
 # Obstacles

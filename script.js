@@ -16,7 +16,10 @@ let timerStarted = false;
 let remainingTime = 6;
 let safeLocations = [];
 let bombLocations = [];
+// initialize timerid here so that it can be accessed globally. it is changed within a local setting
 let timerId;
+let score = 0;
+let highScore = 0;
 
 
 //sets up new tiles and game on reload
@@ -89,10 +92,16 @@ function clickTile(id) {
     // check if square is bomb and display explosion
     if(bombLocations.includes(tileNum)) {
         tile.innerHTML = '&#128165';
+        // highlights the bomb that was hit
+        tile.style.backgroundColor = 'var(--color-1)';
+        // changing front color to white makes bombs more visible
+        tile.style.color = 'white';
         // clear interval here stops time if bomb explodes
         clearInterval(timerId);
         endGame();
-    }
+    } else {
+        updateScore();
+    };
 }
 
 
@@ -106,6 +115,10 @@ function startTimer() {
         remainingTime -= 1;
         let min = Math.floor(remainingTime / 60);
         let sec = remainingTime % 60;
+        // changes time to red in last minute
+        if(sec < 60) {
+            timer.style.color = 'var(--color-1)';
+        };
         // create leading zero for seconds
         if(sec < 10) {
             sec = `0${sec}`;
@@ -121,6 +134,18 @@ function startTimer() {
 }
 
 
+function updateScore() {
+    let current = document.getElementById('score');
+    let high = document.getElementById('hi-score');
+    score += 10;
+    current.innerHTML = score;
+    if(score > highScore) {
+        highScore = score;
+        high.innerHTML = highScore;
+    };
+}
+
+
 // sequence for game end
 function endGame() {
     // send message to console
@@ -130,6 +155,8 @@ function endGame() {
         // show all bomb locations
         if(bombLocations.includes(i)) {
             document.getElementById(i).innerHTML = '&#128165';
+            // changing front color to white makes bombs more visible
+            document.getElementById(i).style.color = 'white';
         };
         document.getElementById(i).setAttribute('disabled', 'true');
     };
