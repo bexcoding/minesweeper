@@ -27,6 +27,7 @@ Game in the style of classic minesweeper.
 - stylized timer and made larger
 - styled scoreboard and add logic to track score and high score
 - added odds multiplier
+- added newgame button and ability to reset all game components
 
 
 # Obstacles

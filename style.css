@@ -45,8 +45,21 @@ main {
     border-bottom: 5px solid var(--color-2);
 }
 
-#scoreboard, #score, #hi-score, #odds{
+#scoreboard, #score, #hi-score, #odds, #new-game{
     margin-left: 40px;
+}
+
+#new-game {
+    margin-top: 30px;
+    font-size: 1.1em;
+    color: white;
+    background-color: var(--color-2);
+    border-radius: 10px;
+}
+
+#new-game:hover {
+    color: var(--color-2);
+    background-color: var(--color-1);
 }
 
 #game-grid {

@@ -62,6 +62,15 @@ function createGameTiles(){
     };
 }
 
+
+// delete tiles
+function resetTiles(parent) {
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild)
+    };
+}
+
+
 // decides which tiles are safe and which are bombs
 function assignLocations(tileTotal, bombTotal) {
     let safe = [];
@@ -180,4 +189,22 @@ function endGame() {
     setTimeout(() => {
         window.alert('Game Over');
     }, 1000);
+}
+
+
+// start new game
+function newGame() {
+    clearInterval(timerId);
+    document.getElementById('timer').innerHTML = '10:00';
+    remainingTiles = 100;
+    timerStarted = false;
+    remainingTime = 600;
+    safeLocations = [];
+    bombLocations = [];
+    score = 0;
+    document.getElementById('score').innerHTML = 0;
+    updateOdds();
+    resetTiles(document.getElementById('game-grid'));
+    createGameTiles();
+    assignLocations(numOfTiles, numOfBombs);
 }
