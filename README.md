@@ -28,6 +28,7 @@ Game in the style of classic minesweeper.
 - styled scoreboard and add logic to track score and high score
 - added odds multiplier
 - added newgame button and ability to reset all game components
+- add function to assign numbers; only done as revealed so that the entire board does not need to be calculated on load.
 
 
 # Obstacles

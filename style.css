@@ -84,5 +84,7 @@ main {
 }
 
 .game-tile:hover {
-    background-color: #CDB3FF;
+    /* background-color: #CDB3FF;
+    */
+    background-color: var(--color-1);
 }

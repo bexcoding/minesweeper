@@ -91,6 +91,70 @@ function assignLocations(tileTotal, bombTotal) {
 }
 
 
+// assign numbers
+function assignNumber(id) {
+    let bombCount = 0;
+    let left = false;
+    let right = false;
+    let top = false;
+    let bottom = false;
+    let checklist = [];
+    // locate which part of the board the tile is in; multiple can be true
+    if(id % 10 === 0) {
+        left = true;
+    };
+    if((id + 1) % 10 === 0) {
+        right = true;
+    };
+    if(id < 10) {
+        top = true;
+    };
+    if(id > 89) {
+        bottom = true;
+    };
+    // check the surroundings for bombs; there are 9 options
+    // top of board
+    if(top) {
+        if(left) {
+            checklist = [1, 10, 11];
+        } else if(right) {
+            checklist = [-1, 9, 10];
+        } else {
+            checklist = [-1, 1, 9, 10, 11];
+        };
+    // bottom of board
+    } else if(bottom) {
+        if(left) {
+            checklist = [-10, -9, 1];
+        } else if(right) {
+            checklist = [-11, -10, -1];
+        } else {
+            checklist = [-11, -10, -9, -1, 1];
+        };
+    // left, middle, or right of board 
+    } else {
+        if(left) {
+            checklist = [-10, -9, 1, 10, 11];
+        } else if(right) {
+            checklist = [-11, -10, -1, 9, 10];
+        // all non-edge pieces
+        } else {
+            checklist = [-11, -10, -9, -1, 1, 9, 10, 11];
+        };
+    };
+    // check all appropriate locations for bombs
+    for(num in checklist) {
+        if(bombLocations.includes((id + checklist[num]))) {
+            bombCount += 1;
+        };
+    };
+    // assign number on board to make visible
+    if(bombCount > 0) {
+        document.getElementById(id).innerHTML = bombCount;
+    };
+}
+
+
 // what to do when a tile is clicked
 function clickTile(id) {
     let tile = document.getElementById(id);
@@ -114,6 +178,7 @@ function clickTile(id) {
     } else {
         updateScore();
         updateOdds();
+        assignNumber(tileNum);
     };
 }
 
