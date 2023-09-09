@@ -33,6 +33,10 @@ window.addEventListener('load', () => {
     assignLocations(numOfTiles, numOfBombs);
 });
 
+// prevents a right click on a game tile from opening context menu
+document.getElementById('game-grid').addEventListener('contextmenu', (e) => {
+    e.preventDefault();
+})
 
 //Fisher-Yates Sorting Algorithm
 function shuffleArray(list) {
@@ -58,6 +62,7 @@ function createGameTiles(){
         square.setAttribute('id', i);
         square.setAttribute('type', 'button');
         square.setAttribute('onclick', 'clickTile(id)');
+        square.setAttribute('oncontextmenu', 'rightClick(id)');
         grid.appendChild(square);
     };
 }
@@ -93,6 +98,7 @@ function assignLocations(tileTotal, bombTotal) {
 
 // assign numbers
 function assignNumber(id) {
+    let current = document.getElementById(id);
     let bombCount = 0;
     let left = false;
     let right = false;
@@ -149,11 +155,38 @@ function assignNumber(id) {
         };
     };
     // assign number on board to make visible
-    if(bombCount > 0) {
-        document.getElementById(id).innerHTML = bombCount;
+    if(bombCount === 0) {
+        current.innerHTML = '';
+    } else if(bombCount > 0) {
+        current.innerHTML = bombCount;
+        // change color of text based on number of bombs
+        if(bombCount === 1) {
+            current.style.color = '#098500';
+        } else if(bombCount === 2) {
+            current.style.color = '#CC6300';
+        } else if(bombCount === 3) {
+            current.style.color = '#D10000';
+        } else {
+            current.style.color = '#97203E';
+        };
     };
 }
 
+
+// makes right click put flag on space
+function rightClick(id) {
+    let current = document.getElementById(id);
+    // will only place flag on non-disabled spaces
+    if(!current.getAttribute('disabled')) {
+        if(current.innerHTML === '') {
+            current.innerHTML = '&#9873';
+        } else if (current.innerHTML === '?') {
+            current.innerHTML = '';
+        } else if(current.innerHTML != '') {
+            current.innerHTML = '?';
+        };
+    };
+}
 
 // what to do when a tile is clicked
 function clickTile(id) {
@@ -241,13 +274,17 @@ function endGame() {
     console.log('Game Over');
     // go through each tile and disable tile
     for(i = 0; i < numOfTiles; i++){
+        let current = document.getElementById(i);
+        // clears flags and extra content from board first
+        current.innerHTML = '';
+        assignNumber(i);
         // show all bomb locations
         if(bombLocations.includes(i)) {
-            document.getElementById(i).innerHTML = '&#128165';
+            current.innerHTML = '&#128165';
             // changing front color to white makes bombs more visible
-            document.getElementById(i).style.color = 'white';
+            current.style.color = 'white';
         };
-        document.getElementById(i).setAttribute('disabled', 'true');
+        current.setAttribute('disabled', 'true');
     };
     // show message that says that the game is over
     // timeout so that alert doesnt show up before board is disabled
