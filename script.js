@@ -150,14 +150,12 @@ function assignNumber(id) {
     if(bombCount === 0) {
         current.innerHTML = '';
         // attempt at recursion for empty spots
-        /*
         for(num in checklist) {
             let potential = (id + checklist[num]);
             if(!document.getElementById(potential).getAttribute('disabled')) {
-                assignNumber(potential);
+                clickTile(potential);
             };
         };
-        */
     } else if(bombCount > 0) {
         current.innerHTML = bombCount;
         // change color of text based on number of bombs
