@@ -211,6 +211,7 @@ function clickTile(id) {
         updateScore();
         updateOdds();
         assignNumber(tileNum);
+        checkWin();
     };
 }
 
@@ -284,6 +285,14 @@ function endGame() {
             current.style.color = 'white';
         };
         current.setAttribute('disabled', 'true');
+    };
+}
+
+
+// check for win
+function checkWin() {
+    if(remainingTiles === numOfBombs) {
+        endGame();
     };
 }
 
