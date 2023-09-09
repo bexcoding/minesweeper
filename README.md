@@ -31,6 +31,7 @@ Game in the style of classic minesweeper.
 - add function to assign numbers; only done as revealed so that the entire board does not need to be calculated on load.
 - each number is a different color; allow right click to mark with flags
 - fixed recursion for blank spaces by changing recursive call from assign number to click tile
+- fixed timer so that it stops on win
 
 
 # Obstacles
@@ -40,3 +41,4 @@ Game in the style of classic minesweeper.
 - how to get timer to space correctly and stop when wanted. also timer runs multiple times
 - couldnt get timer to stop. needed setinterval. also needed to get the return value by assigning the interval start to a variable
 - unsure how to get recursion to work without exceeding call stack
+- trying to debug scoring so that score doesn't increase for recursive spots - but assign number and click tile call each other

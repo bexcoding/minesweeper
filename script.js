@@ -1,7 +1,7 @@
 /*
 Title: Minesweeper
 Description: Classic game of minesweeper for browser
-Last Updated: Sep 8, 2023
+Last Updated: Sep 9, 2023
 Developer: Alexander Beck
 Email: beckhv2@gmail.com
 Github: https://github.com/bexcoding
@@ -11,7 +11,7 @@ Github: https://github.com/bexcoding
 const grid = document.getElementById('game-grid');
 const gridSize = 10;
 const numOfTiles = gridSize * gridSize;
-const numOfBombs = 10;
+const numOfBombs = 1;
 // remainingtiles will be used to decrement and count for odds
 let remainingTiles = numOfTiles;
 let timerStarted = false;
@@ -31,6 +31,7 @@ window.addEventListener('load', () => {
     createGameTiles();
     //decide which tiles have bombs
     assignLocations(numOfTiles, numOfBombs);
+    updateOdds();
 });
 
 // prevents a right click on a game tile from opening context menu
@@ -209,7 +210,10 @@ function clickTile(id) {
         endGame();
     } else {
         updateScore();
+        remainingTiles -= 1;
         updateOdds();
+
+        console.log(`initial score is ${score}`)
         assignNumber(tileNum);
         checkWin();
     };
@@ -260,7 +264,6 @@ function updateScore() {
 
 // update the odds
 function updateOdds() {
-    remainingTiles -= 1;
     odds = numOfBombs / remainingTiles;
     // convert odds to percentage form and display
     const percentage = Math.floor(odds * 100);
@@ -292,6 +295,9 @@ function endGame() {
 // check for win
 function checkWin() {
     if(remainingTiles === numOfBombs) {
+        // stop timer
+        clearInterval(timerId);
+        // show the rest of the board
         endGame();
     };
 }
