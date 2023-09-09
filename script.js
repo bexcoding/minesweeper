@@ -1,7 +1,7 @@
 /*
 Title: Minesweeper
 Description: Classic game of minesweeper for browser
-Last Updated: Sep 7, 2023
+Last Updated: Sep 8, 2023
 Developer: Alexander Beck
 Email: beckhv2@gmail.com
 Github: https://github.com/bexcoding
@@ -50,13 +50,6 @@ function shuffleArray(list) {
 // creates the tiles on the screen
 function createGameTiles(){
     for(i = 0; i < numOfTiles; i++) {
-        // trying to use button instead of div for tiles
-        /*
-        let square = document.createElement('div');
-        square.setAttribute('class', 'game-tile');
-        square.setAttribute('id', i);
-        grid.appendChild(square);
-        */
         let square = document.createElement('button');
         square.setAttribute('class', 'game-tile');
         square.setAttribute('id', i);
@@ -92,7 +85,6 @@ function assignLocations(tileTotal, bombTotal) {
     };
     // set safe locations as all remaining locations that are not bombs 
     safeLocations = safe;
-    console.log(bombLocations);
 }
 
 
@@ -157,6 +149,15 @@ function assignNumber(id) {
     // assign number on board to make visible
     if(bombCount === 0) {
         current.innerHTML = '';
+        // attempt at recursion for empty spots
+        /*
+        for(num in checklist) {
+            let potential = (id + checklist[num]);
+            if(!document.getElementById(potential).getAttribute('disabled')) {
+                assignNumber(potential);
+            };
+        };
+        */
     } else if(bombCount > 0) {
         current.innerHTML = bombCount;
         // change color of text based on number of bombs
@@ -286,11 +287,6 @@ function endGame() {
         };
         current.setAttribute('disabled', 'true');
     };
-    // show message that says that the game is over
-    // timeout so that alert doesnt show up before board is disabled
-    setTimeout(() => {
-        window.alert('Game Over');
-    }, 1000);
 }
 
 

@@ -38,3 +38,4 @@ Game in the style of classic minesweeper.
 - how to get button to pass id when clicked so it can be disabled
 - how to get timer to space correctly and stop when wanted. also timer runs multiple times
 - couldnt get timer to stop. needed setinterval. also needed to get the return value by assigning the interval start to a variable
+- unsure how to get recursion to work without exceeding call stack
