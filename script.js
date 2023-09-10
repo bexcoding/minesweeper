@@ -11,19 +11,22 @@ Github: https://github.com/bexcoding
 const grid = document.getElementById('game-grid');
 const gridSize = 10;
 const numOfTiles = gridSize * gridSize;
-const numOfBombs = 1;
+const numOfBombs = 10;
 // remainingtiles will be used to decrement and count for odds
 let remainingTiles = numOfTiles;
 let timerStarted = false;
 let remainingTime = 600;
 let safeLocations = [];
 let bombLocations = [];
+// dictionary to hold numbers for board
+let assignedNumbers = {};
+// dictionary of adjacent tiles
+let checklistDict = {};
 // initialize timerid here so that it can be accessed globally. it is changed within a local setting
 let timerId;
 let score = 0;
 let highScore = 0;
 let odds = numOfBombs / numOfTiles;
-
 
 //sets up new tiles and game on reload
 window.addEventListener('load', () => {
@@ -31,6 +34,12 @@ window.addEventListener('load', () => {
     createGameTiles();
     //decide which tiles have bombs
     assignLocations(numOfTiles, numOfBombs);
+    // fill dictionary with preassigned numbers
+    for(i = 0; i < numOfTiles; i++){
+        if(!bombLocations.includes(i)){
+            assignedNumbers[i] = assignNumber(i);
+        };
+    };
     updateOdds();
 });
 
@@ -55,7 +64,7 @@ function createGameTiles(){
         square.setAttribute('class', 'game-tile');
         square.setAttribute('id', i);
         square.setAttribute('type', 'button');
-        square.setAttribute('onclick', 'clickTile(id)');
+        square.setAttribute('onclick', 'clickTile(id, true)');
         square.setAttribute('oncontextmenu', 'rightClick(id)');
         grid.appendChild(square);
     };
@@ -89,9 +98,8 @@ function assignLocations(tileTotal, bombTotal) {
 }
 
 
-// assign numbers
+// assign numbers but do not show
 function assignNumber(id) {
-    let current = document.getElementById(id);
     let bombCount = 0;
     let left = false;
     let right = false;
@@ -141,30 +149,41 @@ function assignNumber(id) {
             checklist = [-11, -10, -9, -1, 1, 9, 10, 11];
         };
     };
+    // add the checklist to the global dictionary
+    checklistDict[id] = checklist;
     // check all appropriate locations for bombs
     for(num in checklist) {
         if(bombLocations.includes((id + checklist[num]))) {
             bombCount += 1;
         };
     };
+    return bombCount;
+}
+
+
+// show numbers
+function showNumber(id) {
+    let current = document.getElementById(id);
+    let tempChecklist = checklistDict[id];
+    let num = assignedNumbers[id];
     // assign number on board to make visible
-    if(bombCount === 0) {
+    if(num === 0) {
         current.innerHTML = '';
         // attempt at recursion for empty spots
-        for(num in checklist) {
-            let potential = (id + checklist[num]);
+        for(num in tempChecklist) {
+            let potential = (id + tempChecklist[num]);
             if(!document.getElementById(potential).getAttribute('disabled')) {
-                clickTile(potential);
+                clickTile(potential, false);
             };
         };
-    } else if(bombCount > 0) {
-        current.innerHTML = bombCount;
+    } else if(num > 0) {
+        current.innerHTML = num;
         // change color of text based on number of bombs
-        if(bombCount === 1) {
+        if(num === 1) {
             current.style.color = '#098500';
-        } else if(bombCount === 2) {
+        } else if(num === 2) {
             current.style.color = '#CC6300';
-        } else if(bombCount === 3) {
+        } else if(num === 3) {
             current.style.color = '#D10000';
         } else {
             current.style.color = '#97203E';
@@ -189,7 +208,7 @@ function rightClick(id) {
 }
 
 // what to do when a tile is clicked
-function clickTile(id) {
+function clickTile(id, scoring) {
     let tile = document.getElementById(id);
     let tileNum = Number(id);
     if(timerStarted === false) {
@@ -209,13 +228,16 @@ function clickTile(id) {
         clearInterval(timerId);
         endGame();
     } else {
-        updateScore();
         remainingTiles -= 1;
         updateOdds();
-
-        console.log(`initial score is ${score}`)
-        assignNumber(tileNum);
-        checkWin();
+        showNumber(tileNum);
+        // scoring variable allows true clicks to increase score and auto clicks to not score
+        if(scoring === true) {
+            // do score math outside of update score so that it doesnt give extra points on endgame
+            score += (10 + (Math.floor(10 * odds)));
+            updateScore();
+            checkWin();
+        };
     };
 }
 
@@ -253,7 +275,6 @@ function updateScore() {
     let current = document.getElementById('score');
     let high = document.getElementById('hi-score');
     // adds 10 points per tile times the odds multiplier
-    score += (10 + (Math.floor(10 * odds)));
     current.innerHTML = score;
     if(score > highScore) {
         highScore = score;
@@ -273,14 +294,12 @@ function updateOdds() {
 
 // sequence for game end
 function endGame() {
-    // send message to console
-    console.log('Game Over');
     // go through each tile and disable tile
     for(i = 0; i < numOfTiles; i++){
         let current = document.getElementById(i);
         // clears flags and extra content from board first
         current.innerHTML = '';
-        assignNumber(i);
+        showNumber(i);
         // show all bomb locations
         if(bombLocations.includes(i)) {
             current.innerHTML = '&#128165';
@@ -289,11 +308,16 @@ function endGame() {
         };
         current.setAttribute('disabled', 'true');
     };
+    // bonus for completing quickly
+    score += (remainingTime * 3);
+    updateScore();
 }
 
 
 // check for win
 function checkWin() {
+
+    console.log('check')
     if(remainingTiles === numOfBombs) {
         // stop timer
         clearInterval(timerId);
@@ -312,10 +336,17 @@ function newGame() {
     remainingTime = 600;
     safeLocations = [];
     bombLocations = [];
+    assignedNumbers = {};
+    checklistDict = {};
     score = 0;
     document.getElementById('score').innerHTML = 0;
-    updateOdds();
     resetTiles(document.getElementById('game-grid'));
     createGameTiles();
     assignLocations(numOfTiles, numOfBombs);
+    for(i = 0; i < numOfTiles; i++){
+        if(!bombLocations.includes(i)){
+            assignedNumbers[i] = assignNumber(i);
+        };
+    };
+    updateOdds();
 }

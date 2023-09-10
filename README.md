@@ -32,6 +32,9 @@ Game in the style of classic minesweeper.
 - each number is a different color; allow right click to mark with flags
 - fixed recursion for blank spaces by changing recursive call from assign number to click tile
 - fixed timer so that it stops on win
+- split assigning numbers and showing numbers to different functions
+- assign numbers once and added dict so they could be accessed later
+- give points for extra time
 
 
 # Obstacles
