@@ -37,6 +37,8 @@ Game in the style of classic minesweeper.
 - give points for extra time
 - fixed scoring so that it doesnt give time or difficulty bonus to a loss
 - winning turns bombs into red hearts
+- added winning game message
+- added difficulty buttons and logic
 
 
 # Obstacles

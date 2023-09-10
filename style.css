@@ -45,8 +45,16 @@ main {
     border-bottom: 5px solid var(--color-2);
 }
 
-#scoreboard, #score, #hi-score, #odds, #new-game{
+#scoreboard, #score, #hi-score, #odds, #difficulty, #new-game{
     margin-left: 40px;
+}
+
+#difficulty {
+    font-size: 0.6em;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    margin-top: 30px;
 }
 
 #new-game {

@@ -1,7 +1,7 @@
 /*
 Title: Minesweeper
 Description: Classic game of minesweeper for browser
-Last Updated: Sep 9, 2023
+Last Updated: Sep 10, 2023
 Developer: Alexander Beck
 Email: beckhv2@gmail.com
 Github: https://github.com/bexcoding
@@ -11,7 +11,7 @@ Github: https://github.com/bexcoding
 const grid = document.getElementById('game-grid');
 const gridSize = 10;
 const numOfTiles = gridSize * gridSize;
-const numOfBombs = 10;
+let numOfBombs = 10;
 let difficulty = 1;
 // remainingtiles will be used to decrement and count for odds
 let remainingTiles = numOfTiles;
@@ -235,7 +235,7 @@ function clickTile(id, scoring) {
         // scoring variable allows true clicks to increase score and auto clicks to not score
         if(scoring === true) {
             // do score math outside of update score so that it doesnt give extra points on endgame
-            score += (10 + (Math.floor(10 * odds)));
+            score += ((10 + (Math.floor(10 * odds))) * difficulty);
             updateScore();
             checkWin();
         };
@@ -331,12 +331,33 @@ function checkWin() {
             current.innerHTML = '&#10084';
             current.style.color = 'red';
         };
+        // victory message on delay so that all other endgame elements complete before display
+        setTimeout(() => {
+            alert(`You Won!\nYour score was ${score}.\nYour high score is ${highScore}.\nIncrease your difficulty or go faster for a higher score.`);
+        }, 1000);
     };
 }
 
 
 // start new game
 function newGame() {
+    // check for difficulty selected before starting game
+    let dif = document.getElementsByName('difficulty');
+    for(i = 0; i < dif.length; i++) {
+        if(dif[i].checked) {
+            difficulty = Number(dif[i].value);
+        };
+    };
+    // change bomb numbers based on difficulty
+    if(difficulty === 1) {
+        numOfBombs = 10;
+    } else if(difficulty === 2) {
+        numOfBombs = 15;
+    } else if(difficulty === 3) {
+        numOfBombs = 20;
+    } else if(difficulty === 4) {
+        numOfBombs = 30;
+    };
     clearInterval(timerId);
     document.getElementById('timer').innerHTML = '10:00';
     remainingTiles = 100;

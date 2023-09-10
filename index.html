@@ -22,6 +22,24 @@
           <p>Odds Multiplier: </p>
           <div id="odds"></div>
         </div>
+        <div id="difficulty">
+          <div>
+            <input type="radio" name="difficulty" value="1" id="easy" checked>
+            <label for="easy">Easy (10 Bombs)</label>
+          </div>
+          <div>
+            <input type="radio" name="difficulty" value="2" id="medium">
+            <label for="medium">Medium (15 Bombs)</label>
+          </div>
+          <div>
+            <input type="radio" name="difficulty" value="3" id="hard">
+            <label for="hard">Hard (20 Bombs)</label>
+          </div>
+          <div>
+            <input type="radio" name="difficulty" value="4" id="nightmare">
+            <label for="nightmare">Nightmare (30 Bombs)</label>
+          </div>
+        </div>
         <button id="new-game" type="button" onclick="newGame()">New Game</button>
       </div>
       <div id="game-grid">
