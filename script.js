@@ -12,6 +12,7 @@ const grid = document.getElementById('game-grid');
 const gridSize = 10;
 const numOfTiles = gridSize * gridSize;
 const numOfBombs = 10;
+let difficulty = 1;
 // remainingtiles will be used to decrement and count for odds
 let remainingTiles = numOfTiles;
 let timerStarted = false;
@@ -308,21 +309,28 @@ function endGame() {
         };
         current.setAttribute('disabled', 'true');
     };
-    // bonus for completing quickly
-    score += (remainingTime * 3);
-    updateScore();
+    
 }
 
 
 // check for win
 function checkWin() {
-
-    console.log('check')
     if(remainingTiles === numOfBombs) {
         // stop timer
         clearInterval(timerId);
+        // bonus for completing quickly
+        score += (remainingTime * 2);
+        // bonus for difficulty
+        score *= difficulty;
+        updateScore();
         // show the rest of the board
         endGame();
+        // win turns bombs into red hearts
+        for(i in bombLocations){
+            let current = document.getElementById(bombLocations[i]);
+            current.innerHTML = '&#10084';
+            current.style.color = 'red';
+        };
     };
 }
 

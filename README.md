@@ -35,6 +35,8 @@ Game in the style of classic minesweeper.
 - split assigning numbers and showing numbers to different functions
 - assign numbers once and added dict so they could be accessed later
 - give points for extra time
+- fixed scoring so that it doesnt give time or difficulty bonus to a loss
+- winning turns bombs into red hearts
 
 
 # Obstacles
