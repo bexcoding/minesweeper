@@ -39,6 +39,7 @@ Game in the style of classic minesweeper.
 - winning turns bombs into red hearts
 - added winning game message
 - added difficulty buttons and logic
+- comment on code
 
 
 # Obstacles

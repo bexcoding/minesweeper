@@ -1,3 +1,14 @@
+/*
+Title: Minesweeper
+Description: Classic game of minesweeper for browser
+Last Updated: Sep 11, 2023
+Developer: Alexander Beck
+Email: beckhv2@gmail.com
+Github: https://github.com/bexcoding
+*/
+
+
+/* color variables for page theme; red, dark blue, light grey */
 :root {
     --color-1: #AE0A0A;
     --color-2: #1E112D;
@@ -11,6 +22,7 @@ body {
     background-color: #E5E8F6;
 }
 
+/* banner with red minesweeper title */
 header {
     text-align: center;
     font-size: 2em;
@@ -21,6 +33,7 @@ header {
     border-bottom: 5px solid var(--color-2);
 }
 
+/* main grid display for page below banner */
 main {
     display: grid;
     grid-template-columns: repeat(4, 300px);
@@ -28,9 +41,10 @@ main {
     background-color: var(--color-3);
 }
 
+/* area on left with score, high score, and new game button */
 #display-area {
     width: 320px;
-    height: 740px;
+    height: 800px;
     background-color: white;
     grid-column: 1 / 2;
     grid-row: 1 / 5;
@@ -70,6 +84,7 @@ main {
     background-color: var(--color-1);
 }
 
+/* grid of buttons for game */
 #game-grid {
     background-color: var(--color-3);
     height: 600px;
@@ -93,7 +108,5 @@ main {
 }
 
 .game-tile:hover {
-    /* background-color: #CDB3FF;
-    */
     background-color: var(--color-1);
 }
